@@ -28,19 +28,63 @@ public class DataProvider {
      * @return  стрим аргументов:
      */
     protected static Stream<Arguments> providerSkill02() {
-        return Stream.of(arguments(
-                "Онлайн-школа SkillFactory — онлайн-обучение востребованным IT-профессиям",
-                "+7 958 577-04-17",
-                "+7 495 291-09-12",
-                "info@skillfactory.ru"));
+        return Stream.of(arguments("Все курсы обучения"));
     }
 
-    /**
-     * Метод-провайдер для тест-кейса testSberAstChoice()
-     * @return  стрим аргументов: текст для поиска, больше цены, валюта,
-     *                            фрагмент закона, макс.кол-во позиций просмотра, количество для выборки
-     */
-    protected static Stream<Arguments> providerSberAst() {
-        return Stream.of(arguments("Страхование", 600000.0, "RUB", "44-ФЗ", 120, 10));
+    protected static Stream<Arguments> providerSkill03() {
+        return Stream.of(arguments("Надёжный старт в IT"));
     }
+
+    protected static Stream<Arguments> providerSkill04() {
+        return Stream.of(arguments("Data Scientist"));
+    }
+
+    protected static Stream<Arguments> providerSkill05() {
+        return Stream.of(arguments("Полный курс по Data Science"));
+    }
+
+    protected static Stream<Arguments> providerSkill06() {
+        return Stream.of(arguments("Аналитик Данных"));
+    }
+
+    protected static Stream<Arguments> providerSkill07() {
+        return Stream.of(arguments("Полный курс по анализу данных"));
+    }
+
+    protected static Stream<Arguments> providerSkill08() {
+        return Stream.of(arguments("Тестировщик\nна Python"));
+    }
+
+    protected static Stream<Arguments> providerSkill09() {
+        return Stream.of(arguments("Fullstack-разработчик на Python"));
+    }
+
+    protected static Stream<Arguments> providerSkill10() {
+        return Stream.of(arguments("Веб-разработчик с нуля"));
+    }
+
+    protected static Stream<Arguments> providerSkill11() {
+        return Stream.of(arguments("Python-разработчик"));
+    }
+
+    protected static Stream<Arguments> providerSkill12() {
+        return Stream.of(arguments("Разработчик игр на Unity"));
+    }
+
+    protected static Stream<Arguments> providerSkill13() {
+        return Stream.of(arguments("Разработчик игр на Unity"));
+    }
+
+    protected static Stream<Arguments> providerSkill14() {
+        return Stream.of(arguments("Тестировщик\nна Java"));
+    }
+
+    protected static Stream<Arguments> providerSkill15() {
+        return Stream.of(arguments("Java-разработчик"));
+    }
+
+    protected static Stream<Arguments> providerSkill16() {
+        return Stream.of(arguments("Инженер по ручному тестированию"));
+    }
+
 }
