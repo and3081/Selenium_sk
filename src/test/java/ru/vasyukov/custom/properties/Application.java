@@ -14,9 +14,6 @@ import org.aeonbits.owner.Config;
         "file:application.properties"
 })
 public interface Application extends Config {
-    @Key("base.url.sber.ast")
-    String baseUrlSberAst();
-
     @Key("base.url.skillfactory")
     String baseUrlSkillfactory();
 }
