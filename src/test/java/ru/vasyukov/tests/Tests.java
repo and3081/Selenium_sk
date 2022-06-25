@@ -4,7 +4,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.vasyukov.hooks.WebHooks;
-import ru.vasyukov.pages.PageSberAstMain;
 import ru.vasyukov.pages.PageSkillMain;
 
 /**
@@ -45,26 +44,4 @@ public class Tests extends WebHooks {
                 .checkFooterText(email);
     }
 
-//    /**
-//     * Тест-кейс выборки и поиска в Сбербанк-АСТ
-//     * параметры поставляются провайдером данных providerSberAst()
-//     * @param search          текст для поиска (Страхование)
-//     * @param price           больше цены (600000)
-//     * @param currency        валюта (RUB)
-//     * @param law             фрагмент закона (44-ФЗ)
-//     * @param maxCountView    макс.кол-во позиций просмотра (120)
-//     * @param countChoice     количество для выборки (10)
-//     */
-//    @DisplayName("Тестирование выборки в Сбер - АСТ")
-//    @ParameterizedTest(name = "{arguments}")
-//    @MethodSource("ru.vasyukov.tests.DataProvider#providerSberAst")
-//    public void testSberAstChoice(String search, double price, String currency, String law,
-//                                  int maxCountView, int countChoice) {
-//        PageSberAstMain.openFirstPageSberAst(1, driver)
-//                .checkSberAstTitle(2);
-//                .inputSearchField(3, search)
-//                .collectAllPageResults(4, price, currency, law, maxCountView, countChoice)
-//                .assertResults(5, countChoice)
-//                .reportResults(6);
-//    }
 }
