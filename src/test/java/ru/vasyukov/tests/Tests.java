@@ -45,7 +45,7 @@ public class Tests extends WebHooks {
      * @param maxCountView    макс.кол-во позиций просмотра (120)
      * @param countChoice     количество для выборки (10)
      */
-    @DisplayName("Тестирование выборки в Сбер-АСТ")
+    @DisplayName("Тестирование выборки в Сбер - АСТ")
     @ParameterizedTest(name = "{arguments}")
     @MethodSource("ru.vasyukov.tests.DataProvider#providerSberAst")
     public void testSberAstChoice(String search, double price, String currency, String law,
