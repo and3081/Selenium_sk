@@ -3,7 +3,6 @@ package ru.vasyukov.pages;
 import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 /**
  * Page класс страницы https://www..ru/
@@ -36,9 +35,9 @@ public class PageSkillMain extends BasePage {
     @Step("Проверка заголовка h1 '{text}'")
     public PageSkillMain checkH1Text(String text) {
         waitVisibleXpath(XPATH_H1, "Заголовок '" + text + "'");
-        System.out.println("|"+text+"|");
+//        System.out.println("|"+text+"|");
         String txt = driver.findElement(By.xpath(XPATH_H1)).getText();
-        System.out.println("|"+txt+"|");
+//        System.out.println("|"+txt+"|");
         Assertions.assertEquals(text, txt, "Заголовок h1 страницы неправильный");
         return this;
     }
