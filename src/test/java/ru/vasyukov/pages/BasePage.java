@@ -44,13 +44,6 @@ public class BasePage {
         actions = new Actions(driver);
     }
 
-    /**
-     * Шаг Инициализация и Открытие стартовой страницы Сбер-АСТ
-     * static
-     * @param step   номер шага для аллюра
-     * @param driver веб-драйвер
-     * @return PO PageSberAstMain
-     */
     @Step("step {step}. Открыть стартовую страницу Сбер-АСТ")  // step 1
     public static PageSberAstMain openFirstPageSberAst(int step, WebDriver driver) {
         init(driver);
@@ -58,13 +51,19 @@ public class BasePage {
         return new PageSberAstMain();
     }
 
+    @Step("Открыть стартовую страницу")
+    public static PageSkillMain openPageMain(WebDriver driver) {
+        init(driver);
+        driver.get(TestData.application.baseUrlSkillfactory());
+        return new PageSkillMain();
+    }
+
     /**
      * Шаг Проверить фрагмент title страницы
-     * @param step  номер шага для аллюра
      * @param title фрагмент title
      */
-    @Step("step {step}. Проверить фрагмент title страницы '{title}'")  // step 2
-    public void checkTitleFragment(int step, String title) {
+    @Step("Проверить фрагмент title страницы '{title}'")
+    public void checkTitleFragment(String title) {
         myAssert(()->wait.until(ExpectedConditions.titleContains(title)),
                 "Ожидание фрагмента title исчерпано: " + title);
     }
@@ -154,7 +153,7 @@ public class BasePage {
      * @return          при успехе транслирует возврат от условия wait()
      */
     private <T> T myAssert(ThrowingSupplier<T> supplier, String message) {
-        return Assertions.assertTimeoutPreemptively(Duration.ofSeconds(timeoutExplicitMs), supplier, message);
+        return Assertions.assertTimeoutPreemptively(Duration.ofMillis(timeoutExplicitMs), supplier, message);
     }
 
     /**

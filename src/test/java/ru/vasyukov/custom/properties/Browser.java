@@ -17,8 +17,11 @@ public interface Browser extends Config {
     @Key("webdriver.chrome.local.path")
     String webdriverChromeLocalPath();
 
-    @Key("webdriver.edge.local.path")
-    String webdriverEdgeLocalPath();
+    @Key("webdriver.chrome.getenv.path")
+    String webdriverChromeGetenvPath();
+
+    @Key("webdriver.edge.getenv.path")
+    String webdriverEdgeGetenvPath();
 
     @Key("default.timeout.implicit.ms")
     String defaultTimeoutImplicitMs();

@@ -83,8 +83,12 @@ public class WebHooks {
                 e.printStackTrace();
             }
         } else {
-            System.setProperty("webdriver.chrome.driver",
-                    System.getenv(TestData.browser.webdriverChromeLocalPath())); //, "drivers/chromedriver.exe");
+            if (TestData.browser.webdriverChromeGetenvPath() == null)
+                System.setProperty("webdriver.chrome.driver",
+                        TestData.browser.webdriverChromeLocalPath());
+            else
+                System.setProperty("webdriver.chrome.driver",
+                        System.getenv(TestData.browser.webdriverChromeGetenvPath()));
             ChromeOptions options = new ChromeOptions();
             if (TestData.browser.headlessMode() != null)
                 options.addArguments("--headless");
@@ -100,7 +104,7 @@ public class WebHooks {
      */
     private WebDriver initEdge() {
         System.setProperty("webdriver.edge.driver",
-                System.getenv(TestData.browser.webdriverEdgeLocalPath())); //, "drivers/chromedriver.exe");
+                System.getenv(TestData.browser.webdriverEdgeGetenvPath())); //, "drivers/chromedriver.exe");
         EdgeOptions options = new EdgeOptions();
         if (TestData.browser.headlessMode() !=null)
             options.addArguments("--headless");
@@ -114,10 +118,10 @@ public class WebHooks {
      */
     private void setDriverDefaultSettings() {
         driver.manage().window().maximize();
-        long timeout = Long.parseLong(TestData.browser.defaultTimeoutImplicitMs());
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(timeout));
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(timeout));
-        driver.manage().timeouts().scriptTimeout(Duration.ofSeconds(timeout));
+        long timeoutMs = Long.parseLong(TestData.browser.defaultTimeoutImplicitMs());
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(timeoutMs));
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofMillis(timeoutMs));
+        driver.manage().timeouts().scriptTimeout(Duration.ofMillis(timeoutMs));
         driver.manage().deleteAllCookies();
     }
 }
