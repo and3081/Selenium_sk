@@ -1,4 +1,4 @@
-#### Тестирование - Selenium https://skillfactory.ru/
+#### Тестирование - Selenium, Java17, Junit5, Maven, Allure 
 
 ## запуск всех тестов
 mvn clean test
