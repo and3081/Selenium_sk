@@ -1,6 +1,5 @@
 package ru.vasyukov.hooks;
 
-import org.openqa.selenium.PageLoadStrategy;
 import ru.vasyukov.custom.listeners.Listeners;
 import ru.vasyukov.custom.properties.TestData;
 import io.qameta.allure.Step;

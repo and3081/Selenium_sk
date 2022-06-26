@@ -30,6 +30,8 @@ public class PageSkillMain extends BasePage {
             "//div[div[./button[text()='Получить консультацию']]]//input[@type='tel']";
     private final String XPATH_INPUT_TEL_ERR =
             "//div[div[./button[text()='Получить консультацию']]]//div[input[@type='tel']]/..//div[@class='t-input-error']";
+    private final String XPATH_ALL_COURSES =
+            "//a[@class='tn-atom' and @href='/catalogue' and text()='Все курсы']";
 
     /**
      * Шаг Проверить фрагмент title страницы
@@ -77,7 +79,13 @@ public class PageSkillMain extends BasePage {
         WebElement el = waitVisibleClickableXpath(XPATH_BUTT_CONSULT, "Получить консультацию");
         waitRealClick(el, XPATH_BUTT_CONSULT);
         return this;
+    }
 
+    @Step("Клик 'Все курсы'")
+    public PageSkillMain clickAllCourses() {
+        WebElement el = waitVisibleClickableXpath(XPATH_ALL_COURSES, "Все курсы");
+        waitRealClick(el, XPATH_ALL_COURSES);
+        return this;
     }
 
     @Step("Ввод в поле Имя '{name}'")

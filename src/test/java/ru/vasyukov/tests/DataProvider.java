@@ -1,7 +1,9 @@
 package ru.vasyukov.tests;
 
 import org.junit.jupiter.params.provider.Arguments;
+import ru.vasyukov.custom.properties.TestData;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.params.provider.Arguments.arguments;
@@ -11,10 +13,6 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
  */
 @SuppressWarnings("unused")
 public class DataProvider {
-    /**
-     * Метод-провайдер для тест-кейса testSkill01()
-     * @return  стрим аргументов:
-     */
     protected static Stream<Arguments> providerSkill01() {
         return Stream.of(arguments(
                 "Онлайн-школа SkillFactory — онлайн-обучение востребованным IT-профессиям",
@@ -23,10 +21,6 @@ public class DataProvider {
                 "info@skillfactory.ru"));
     }
 
-    /**
-     * Метод-провайдер для тест-кейса testSkill02()
-     * @return  стрим аргументов:
-     */
     protected static Stream<Arguments> providerSkill02() {
         return Stream.of(arguments("Все курсы обучения"));
     }
@@ -96,11 +90,21 @@ public class DataProvider {
     }
 
     protected static Stream<Arguments> providerSkill19() {
-        return Stream.of(arguments("1111111111", "Укажите, пожалуйста, корректный номер телефона"));
+        return Stream.of(arguments("111111111122", "Укажите, пожалуйста, корректный номер телефона"));
     }
 
     protected static Stream<Arguments> providerSkill20() {
         return Stream.of(arguments("111", "Слишком короткое значение"));
     }
 
+    protected static Stream<Arguments> providerSkill21() {
+        return Stream.of(arguments("Обязательное поле"));
+    }
+
+    protected static Stream<Arguments> providerSkill22() {
+        return Stream.of(arguments("Тестирование", "qa",
+                List.of(TestData.application.baseUrlSkillfactory()+TestData.application.endQaPython(),
+                        TestData.application.baseUrlSkillfactory()+TestData.application.endQaJava(),
+                        TestData.application.baseUrlSkillfactory()+TestData.application.endQaManual())));
+    }
 }

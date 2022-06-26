@@ -51,6 +51,10 @@ public class BasePage {
         return new PageSkillMain();
     }
 
+    public PageAllCourses nextPageAllCourses() {
+        return new PageAllCourses();
+    }
+
     /**
      * Шаг Проверить фрагмент title страницы
      * @param title фрагмент title
@@ -177,24 +181,26 @@ public class BasePage {
     public boolean waitRealClick(WebElement el, String xpath) {
         boolean[] isClick = new boolean[]{false};
         boolean[] isCatch = new boolean[]{false};
+        Exception[] ex = new Exception[]{null};
 
         myAssert(() -> wait.until((ExpectedCondition<Boolean>) driver -> {
-            try {
-                if (isCatch[0]) {
-                    assert driver != null;
-                    driver.findElement(By.xpath(xpath)).click();  // попытка заново получить элемент
-                } else {
-                    el.click();
-                }
-            } catch (ElementClickInterceptedException e) {
-                actions.sendKeys(Keys.ESCAPE).perform();  // попытка снять попап
-                isCatch[0] = false;
-                return false;
-            } catch (Exception e) {
-                isCatch[0] = true;
-                return false;
-            } isClick[0] = true; return true; }),
-                "Ожидание клика на элемент исчерпано (клик чем-то закрыт)");
+                    try {
+                        if (isCatch[0]) {
+                            assert driver != null;
+                            driver.findElement(By.xpath(xpath)).click();  // попытка заново получить элемент
+                        } else {
+                            el.click();
+                        }
+                    } catch (ElementClickInterceptedException e) {
+                        actions.sendKeys(Keys.ESCAPE).perform();  // попытка снять попап
+                        isCatch[0] = false;
+                        ex[0] = e;
+                        return false;
+                    } catch (Exception e) {
+                        isCatch[0] = true; ex[0] = e; return false;
+                    }
+                    isClick[0] = true; return true; }),
+                "Ожидание клика на элемент исчерпано (клик чем-то закрыт): " + xpath + ", " + ex[0]);
         return isClick[0];
     }
 
@@ -219,10 +225,10 @@ public class BasePage {
                             el.sendKeys(text);
                         }
                     } catch (Exception e) {
-                        isCatch[0] = true;
-                        return false;
-                    } isSend[0] = true; return true; }),
-                "Ожидание send '"+ text +"' в элемент исчерпано");
+                        isCatch[0] = true; return false;
+                    }
+                    isSend[0] = true; return true; }),
+                "Ожидание send '"+ text +"' в элемент исчерпано: " + xpath);
         return isSend[0];
     }
 }
