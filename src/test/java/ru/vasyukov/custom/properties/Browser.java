@@ -14,6 +14,9 @@ import org.aeonbits.owner.Config;
         "file:browser.properties"
 })
 public interface Browser extends Config {
+    @Key("wdm")
+    String wdm();
+
     @Key("webdriver.chrome.local.path")
     String webdriverChromeLocalPath();
 

@@ -1,5 +1,6 @@
 package ru.vasyukov.hooks;
 
+import org.junit.jupiter.api.BeforeAll;
 import ru.vasyukov.custom.listeners.Listeners;
 import ru.vasyukov.custom.properties.TestData;
 import io.qameta.allure.Step;
@@ -14,6 +15,8 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.events.EventFiringDecorator;
 import org.openqa.selenium.support.events.WebDriverListener;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -35,6 +38,12 @@ public class WebHooks {
      * Объект Listeners в зависимости от настройки в проперти или null
      */
     private final WebDriverListener listener = Listeners.getListener();
+    private static final boolean wdm = TestData.browser.wdm() != null && TestData.browser.wdm().equals("true");
+
+    @BeforeAll
+    static void setupClass() {
+        if (wdm) { WebDriverManager.chromedriver().setup(); }
+    }
 
     /**
      * Открытие браузера перед каждым тест-кейсом
@@ -83,13 +92,14 @@ public class WebHooks {
                 e.printStackTrace();
             }
         } else {
-            if (TestData.browser.webdriverChromeGetenvPath() == null) {
-                System.setProperty("webdriver.chrome.driver",
-                        TestData.browser.webdriverChromeLocalPath());
-            }
-            else {
-                System.setProperty("webdriver.chrome.driver",
-                        System.getenv(TestData.browser.webdriverChromeGetenvPath()));
+            if (!wdm) {
+                if (TestData.browser.webdriverChromeGetenvPath() == null) {
+                    System.setProperty("webdriver.chrome.driver",
+                            TestData.browser.webdriverChromeLocalPath());
+                } else {
+                    System.setProperty("webdriver.chrome.driver",
+                            System.getenv(TestData.browser.webdriverChromeGetenvPath()));
+                }
             }
             ChromeOptions options = new ChromeOptions();
 //            options.setPageLoadStrategy(PageLoadStrategy.NONE);
@@ -112,13 +122,14 @@ public class WebHooks {
      * Путь к msedgedriver.exe в сист.переменной EDGE_DRIVER
      */
     private WebDriver initEdge() {
-        if (TestData.browser.webdriverEdgeGetenvPath() == null) {
-            System.setProperty("webdriver.edge.driver",
-                    TestData.browser.webdriverEdgeLocalPath());
-        }
-        else {
-            System.setProperty("webdriver.edge.driver",
-                    System.getenv(TestData.browser.webdriverEdgeGetenvPath()));
+        if (!wdm) {
+            if (TestData.browser.webdriverEdgeGetenvPath() == null) {
+                System.setProperty("webdriver.edge.driver",
+                        TestData.browser.webdriverEdgeLocalPath());
+            } else {
+                System.setProperty("webdriver.edge.driver",
+                        System.getenv(TestData.browser.webdriverEdgeGetenvPath()));
+            }
         }
         EdgeOptions options = new EdgeOptions();
         if (TestData.browser.headlessMode() !=null) {
