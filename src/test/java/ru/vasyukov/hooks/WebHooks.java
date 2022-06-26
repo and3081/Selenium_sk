@@ -1,5 +1,6 @@
 package ru.vasyukov.hooks;
 
+import org.openqa.selenium.PageLoadStrategy;
 import ru.vasyukov.custom.listeners.Listeners;
 import ru.vasyukov.custom.properties.TestData;
 import io.qameta.allure.Step;
@@ -40,7 +41,7 @@ public class WebHooks {
      * Открытие браузера перед каждым тест-кейсом
      */
     @BeforeEach
-    @Step("step  . Открытие браузера")
+    @Step("Открытие браузера")
     protected void openBrowsers() {
         String typeBrowser = TestData.browser.typeBrowser();
         if (typeBrowser !=null && typeBrowser.equals("edge")) {
@@ -56,7 +57,7 @@ public class WebHooks {
      * Закрытие браузера после каждого тест-кейса
      */
     @AfterEach
-    @Step("step end. Закрытие браузера")
+    @Step("Закрытие браузера")
     protected void closeBrowsers() {
         if (driver != null && TestData.browser.dontCloseBrowser() ==null) {
             driver.quit();
@@ -90,6 +91,12 @@ public class WebHooks {
                 System.setProperty("webdriver.chrome.driver",
                         System.getenv(TestData.browser.webdriverChromeGetenvPath()));
             ChromeOptions options = new ChromeOptions();
+//            options.setPageLoadStrategy(PageLoadStrategy.NONE);
+//            options.addArguments("start-maximized");
+//            options.addArguments("enable-automation");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-gpu");
+            options.addArguments("--disable-dev-shm-usage");
             if (TestData.browser.headlessMode() != null)
                 options.addArguments("--headless");
             driver = new ChromeDriver(options);

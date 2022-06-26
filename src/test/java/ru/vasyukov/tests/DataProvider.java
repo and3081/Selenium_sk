@@ -87,4 +87,8 @@ public class DataProvider {
         return Stream.of(arguments("Инженер по ручному тестированию"));
     }
 
+    protected static Stream<Arguments> providerSkill17() {
+        return Stream.of(arguments("123"));
+    }
+
 }
