@@ -6,7 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 /**
- * Page класс страницы https://www..ru/
+ * Page класс страницы https://skillfactory.ru/
  */
 @SuppressWarnings("FieldCanBeLocal")
 public class PageSkillMain extends BasePage {
@@ -33,10 +33,6 @@ public class PageSkillMain extends BasePage {
     private final String XPATH_ALL_COURSES =
             "//a[@class='tn-atom' and @href='/catalogue' and text()='Все курсы']";
 
-    /**
-     * Шаг Проверить фрагмент title страницы
-     * @param title фрагмент title
-     */
     @Step("Проверить фрагмент title страницы '{title}'")
     public PageSkillMain checkTitleMain(String title) {
         checkTitleFragment(title);
@@ -63,7 +59,6 @@ public class PageSkillMain extends BasePage {
         WebElement el = waitVisibleClickableXpath(xpath, ref);
         waitRealClick(el, xpath);
         return this;
-
     }
 
     @Step("Клик ссылки '{ref}'")
@@ -135,5 +130,4 @@ public class PageSkillMain extends BasePage {
         Assertions.assertEquals(errorText, err, "Должна быть ошибка");
         return this;
     }
-
 }

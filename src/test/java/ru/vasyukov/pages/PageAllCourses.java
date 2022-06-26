@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Page класс страницы https://www..ru/
+ * Page класс страницы https://skillfactory.ru/catalogue
  */
 @SuppressWarnings("FieldCanBeLocal")
 public class PageAllCourses extends BasePage {

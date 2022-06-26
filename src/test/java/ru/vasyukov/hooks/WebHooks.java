@@ -26,6 +26,7 @@ import java.util.Map;
 /**
  * Класс хуков для настройки web драйвера по проперти browser.properties:
  *  - локального
+ *  - удаленного (WDM Selenium)
  *  - удаленного (Selenide)
  *  - ремоут (Selenoid)
  */
@@ -40,6 +41,9 @@ public class WebHooks {
     private final WebDriverListener listener = Listeners.getListener();
     private static final boolean wdm = TestData.browser.wdm() != null && TestData.browser.wdm().equals("true");
 
+    /**
+     * Инициализация WDM
+     */
     @BeforeAll
     static void setupClass() {
         if (wdm) { WebDriverManager.chromedriver().setup(); }
@@ -75,7 +79,6 @@ public class WebHooks {
 
     /**
      * Опции и открытие драйвера Chrome и его дефолт-настройки
-     * Путь к chromedriver.exe в сист.переменной CHROME_DRIVER
      */
     private WebDriver initChrome() {
         if (TestData.browser.remoteUrl() != null) {
@@ -119,7 +122,6 @@ public class WebHooks {
 
     /**
      * Опции и открытие драйвера Edge и его дефолт-настройки
-     * Путь к msedgedriver.exe в сист.переменной EDGE_DRIVER
      */
     private WebDriver initEdge() {
         if (!wdm) {

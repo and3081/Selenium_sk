@@ -17,6 +17,7 @@
         <junit.jupiter.version>5.8.2</junit.jupiter.version>
         <seleniumhq.selenium>4.2.1</seleniumhq.selenium>
         <selenium.support>4.2.1</selenium.support>
+        <webdrivermanager.version>5.2.0</webdrivermanager.version>
         <json.version>20220320</json.version>
         <aspectj.version>1.9.4</aspectj.version>
         <maven-surefire.version>3.0.0-M5</maven-surefire.version>
@@ -65,7 +66,7 @@
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
-            <version>5.1.0</version>
+            <version>${webdrivermanager.version}</version>
             <scope>test</scope>
         </dependency>
 

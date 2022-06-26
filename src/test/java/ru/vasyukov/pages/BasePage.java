@@ -56,7 +56,7 @@ public class BasePage {
     }
 
     /**
-     * Шаг Проверить фрагмент title страницы
+     * Проверить фрагмент title страницы
      * @param title фрагмент title
      */
     @Step("Проверить фрагмент title страницы '{title}'")
@@ -181,7 +181,6 @@ public class BasePage {
     public boolean waitRealClick(WebElement el, String xpath) {
         boolean[] isClick = new boolean[]{false};
         boolean[] isCatch = new boolean[]{false};
-        Exception[] ex = new Exception[]{null};
 
         myAssert(() -> wait.until((ExpectedCondition<Boolean>) driver -> {
                     try {
@@ -194,13 +193,12 @@ public class BasePage {
                     } catch (ElementClickInterceptedException e) {
                         actions.sendKeys(Keys.ESCAPE).perform();  // попытка снять попап
                         isCatch[0] = false;
-                        ex[0] = e;
                         return false;
                     } catch (Exception e) {
-                        isCatch[0] = true; ex[0] = e; return false;
+                        isCatch[0] = true; return false;
                     }
                     isClick[0] = true; return true; }),
-                "Ожидание клика на элемент исчерпано (клик чем-то закрыт): " + xpath + ", " + ex[0]);
+                "Ожидание клика на элемент исчерпано (клик чем-то закрыт): " + xpath);
         return isClick[0];
     }
 
