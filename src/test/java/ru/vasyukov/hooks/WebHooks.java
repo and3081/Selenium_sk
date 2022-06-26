@@ -84,12 +84,14 @@ public class WebHooks {
                 e.printStackTrace();
             }
         } else {
-            if (TestData.browser.webdriverChromeGetenvPath() == null)
+            if (TestData.browser.webdriverChromeGetenvPath() == null) {
                 System.setProperty("webdriver.chrome.driver",
                         TestData.browser.webdriverChromeLocalPath());
-            else
+            }
+            else {
                 System.setProperty("webdriver.chrome.driver",
                         System.getenv(TestData.browser.webdriverChromeGetenvPath()));
+            }
             ChromeOptions options = new ChromeOptions();
 //            options.setPageLoadStrategy(PageLoadStrategy.NONE);
 //            options.addArguments("start-maximized");
@@ -97,8 +99,9 @@ public class WebHooks {
             options.addArguments("--no-sandbox");
             options.addArguments("--disable-gpu");
             options.addArguments("--disable-dev-shm-usage");
-            if (TestData.browser.headlessMode() != null)
+            if (TestData.browser.headlessMode() != null) {
                 options.addArguments("--headless");
+            }
             driver = new ChromeDriver(options);
         }
         setDriverDefaultSettings();
@@ -110,11 +113,18 @@ public class WebHooks {
      * Путь к msedgedriver.exe в сист.переменной EDGE_DRIVER
      */
     private WebDriver initEdge() {
-        System.setProperty("webdriver.edge.driver",
-                System.getenv(TestData.browser.webdriverEdgeGetenvPath())); //, "drivers/chromedriver.exe");
+        if (TestData.browser.webdriverEdgeGetenvPath() == null) {
+            System.setProperty("webdriver.edge.driver",
+                    TestData.browser.webdriverEdgeLocalPath());
+        }
+        else {
+            System.setProperty("webdriver.edge.driver",
+                    System.getenv(TestData.browser.webdriverEdgeGetenvPath()));
+        }
         EdgeOptions options = new EdgeOptions();
-        if (TestData.browser.headlessMode() !=null)
+        if (TestData.browser.headlessMode() !=null) {
             options.addArguments("--headless");
+        }
         driver = new EdgeDriver(options);
         setDriverDefaultSettings();
         return driver;

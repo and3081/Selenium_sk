@@ -3,7 +3,6 @@ package ru.vasyukov.tests;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import ru.vasyukov.custom.properties.TestData;
 import ru.vasyukov.hooks.WebHooks;
 import ru.vasyukov.pages.PageSkillMain;
 
@@ -180,11 +179,43 @@ public class Tests extends WebHooks {
 //                .checkH1Text(titleH1);
 //    }
 
-    @DisplayName("Тестирование ввода неправильного имени")
+//    @DisplayName("Тестирование ввода неправильного имени")
+//    @ParameterizedTest(name = "{arguments}")
+//    @MethodSource("ru.vasyukov.tests.DataProvider#providerSkill17")
+//    public void testSkill17(String name, String errorText) {
+//        PageSkillMain.openPageMain(driver)
+//                .inputName(name)
+//                .clickConsult()
+//                .nameError(errorText);
+//    }
+//
+//    @DisplayName("Тестирование ввода неправильного email")
+//    @ParameterizedTest(name = "{arguments}")
+//    @MethodSource("ru.vasyukov.tests.DataProvider#providerSkill18")
+//    public void testSkill18(String email, String errorText) {
+//        PageSkillMain.openPageMain(driver)
+//                .inputEmail(email)
+//                .clickConsult()
+//                .emailError(errorText);
+//    }
+
+    @DisplayName("Тестирование ввода неправильного телефона")
     @ParameterizedTest(name = "{arguments}")
-    @MethodSource("ru.vasyukov.tests.DataProvider#providerSkill17")
-    public void testSkill17(String name) {
+    @MethodSource("ru.vasyukov.tests.DataProvider#providerSkill19")
+    public void testSkill19(String tel, String errorText) {
         PageSkillMain.openPageMain(driver)
-                .inputName(name);
+                .inputTel(tel)
+                .clickConsult()
+                .telError(errorText);
+    }
+
+    @DisplayName("Тестирование ввода короткого телефона")
+    @ParameterizedTest(name = "{arguments}")
+    @MethodSource("ru.vasyukov.tests.DataProvider#providerSkill20")
+    public void testSkill20(String tel, String errorText) {
+        PageSkillMain.openPageMain(driver)
+                .inputTel(tel)
+                .clickConsult()
+                .telError(errorText);
     }
 }

@@ -88,7 +88,19 @@ public class DataProvider {
     }
 
     protected static Stream<Arguments> providerSkill17() {
-        return Stream.of(arguments("123"));
+        return Stream.of(arguments("123", "Укажите, пожалуйста, имя"));
+    }
+
+    protected static Stream<Arguments> providerSkill18() {
+        return Stream.of(arguments("123", "Укажите, пожалуйста, корректный email"));
+    }
+
+    protected static Stream<Arguments> providerSkill19() {
+        return Stream.of(arguments("1111111111", "Укажите, пожалуйста, корректный номер телефона"));
+    }
+
+    protected static Stream<Arguments> providerSkill20() {
+        return Stream.of(arguments("111", "Слишком короткое значение"));
     }
 
 }

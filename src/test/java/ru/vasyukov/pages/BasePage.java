@@ -62,7 +62,22 @@ public class BasePage {
     }
 
     /**
-     * Ожидание поиска и видимости input-элемента, клик/очистка/ввод текста в него/Enter
+     * Ожидание видимости input-элемента, клик и ввод текста
+     * @param xpath    xpath input-элемента
+     * @param text     тест для ввода
+     * @param message  доп.сообщение для ассерта
+     * @return WebElement
+     */
+    public WebElement waitVisibleInput(String xpath, String text, String message) {
+        WebElement el = myAssert(() -> wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath))),
+                "Ожидание видимости элемента исчерпано: " + message + ": " + xpath);
+        waitRealClick(el, xpath);
+        waitRealSend(el, xpath, text);
+        return el;
+    }
+
+    /**
+     * Ожидание видимости input-элемента, клик/очистка/ввод текста, Enter
      * @param xpath    xpath input-элемента
      * @param text     тест для ввода
      * @param message  доп.сообщение для ассерта
@@ -70,20 +85,11 @@ public class BasePage {
      */
     public WebElement waitVisibleInputEnter(String xpath, String text, String message) {
         WebElement el = myAssert(() -> wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath))),
-                "Ожидание поиска и видимости элемента исчерпано: " + message);
-        inputTextEnter(el, text);
-        return el;
-    }
-
-    /**
-     * Работа с полем ввода: клик для фокуса, очистка, ввод текста, Enter
-     * @param el   элемент ввода
-     * @param text текст для ввода
-     */
-    public void inputTextEnter(WebElement el, String text) {
-        el.click();
+                "Ожидание видимости элемента исчерпано: " + message + ": " + xpath);
+        waitRealClick(el, xpath);
         el.clear();
-        el.sendKeys(text+Keys.ENTER);
+        waitRealSend(el, xpath, text+Keys.ENTER);
+        return el;
     }
 
     /**
@@ -94,22 +100,33 @@ public class BasePage {
      */
     public List<WebElement> waitPresenceList(String xpath, String message) {
         return myAssert(()->wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(xpath))),
-                "Ожидание существования списка элементов исчерпано: " + message);
+                "Ожидание существования списка элементов исчерпано: " + message + ": " + xpath);
     }
 
     /**
-     * Ожидание поиска и видимости элемента
+     * Ожидание существования элемента
+     * @param xpath    xpath элемента
+     * @param message  доп.сообщение для ассерта
+     * @return WebElement
+     */
+    public WebElement waitPresenceXpath(String xpath, String message) {
+        return myAssert(()->wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath))),
+                "Ожидание существования элемента исчерпано: " + message + ": " + xpath);
+    }
+
+    /**
+     * Ожидание существования и видимости элемента
      * @param xpath    xpath элемента
      * @param message  доп.сообщение для ассерта
      * @return WebElement
      */
     public WebElement waitVisibleXpath(String xpath, String message) {
         return myAssert(()->wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath))),
-                "Ожидание поиска и видимости элемента исчерпано: " + message);
+                "Ожидание видимости элемента исчерпано: " + message + ": " + xpath);
     }
 
     /**
-     * Ожидание поиска, видимости и кликабельности элемента
+     * Ожидание существования, видимости и кликабельности элемента
      * @param xpath    xpath элемента
      * @param message  доп.сообщение для ассерта
      * @return WebElement
@@ -117,11 +134,11 @@ public class BasePage {
     public WebElement waitVisibleClickableXpath(String xpath, String message) {
         waitVisibleXpath(xpath, message);
         return myAssert(()->wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath))),
-                "Ожидание элемента clickable исчерпано: " + message);
+                "Ожидание clickable элемента исчерпано: " + message + ": " + xpath);
     }
 
     /**
-     * Ожидание поиска элемента с атрибутом с фрагментом значения
+     * Ожидание существования элемента с атрибутом с фрагментом значения
      * @param xpath    xpath элемента
      * @param attr     атрибут
      * @param value    фрагмент значения
@@ -131,7 +148,7 @@ public class BasePage {
     public boolean waitXpathAttributeContain(String xpath, String attr, String value, String message) {
         return myAssert(()->wait.until(ExpectedConditions.attributeContains(By.xpath(xpath),
                         attr, value)),
-                "Ожидание поиска элемента с аттрибутом: " + attr +"/"+ value +"/"+ message);
+                "Ожидание существования элемента с аттрибутом: " + attr +"/"+ value +"/"+ message + ": " + xpath);
     }
 
     /**
@@ -152,20 +169,60 @@ public class BasePage {
     /**
      * Ожидание и выполнение реального клика, при ElementClickInterceptedException (перекрытие элемента)
      * отправляется ESC в фокус для попытки снятия попапа
-     * @param el  элемент для клика
+     * @param el     элемент для клика
+     * @param xpath  для попытки заново получить элемент
      * @return true- клик сделан
      */
-    public boolean waitRealClick(WebElement el) {
+    @SuppressWarnings("UnusedReturnValue")
+    public boolean waitRealClick(WebElement el, String xpath) {
         boolean[] isClick = new boolean[]{false};
+        boolean[] isCatch = new boolean[]{false};
+
         myAssert(() -> wait.until((ExpectedCondition<Boolean>) driver -> {
-            try { el.click();
+            try {
+                if (isCatch[0]) {
+                    assert driver != null;
+                    driver.findElement(By.xpath(xpath)).click();  // попытка заново получить элемент
+                } else {
+                    el.click();
+                }
             } catch (ElementClickInterceptedException e) {
                 actions.sendKeys(Keys.ESCAPE).perform();  // попытка снять попап
+                isCatch[0] = false;
                 return false;
             } catch (Exception e) {
+                isCatch[0] = true;
                 return false;
             } isClick[0] = true; return true; }),
                 "Ожидание клика на элемент исчерпано (клик чем-то закрыт)");
         return isClick[0];
+    }
+
+    /**
+     * Ожидание и выполнение реального send
+     * @param el     элемент для send
+     * @param xpath  для попытки заново получить элемент
+     * @param text   текст для send
+     * @return true- send сделан
+     */
+    @SuppressWarnings("UnusedReturnValue")
+    public boolean waitRealSend(WebElement el, String xpath, String text) {
+        boolean[] isSend = new boolean[]{false};
+        boolean[] isCatch = new boolean[]{false};
+
+        myAssert(() -> wait.until((ExpectedCondition<Boolean>) driver -> {
+                    try {
+                        if (isCatch[0]) {
+                            assert driver != null;
+                            driver.findElement(By.xpath(xpath)).sendKeys(text);  // попытка заново получить элемент
+                        } else {
+                            el.sendKeys(text);
+                        }
+                    } catch (Exception e) {
+                        isCatch[0] = true;
+                        return false;
+                    } isSend[0] = true; return true; }),
+                "Ожидание send '"+ text +"' в элемент исчерпано");
+        return isSend[0];
     }
 }
