@@ -74,7 +74,7 @@ public class BasePage {
      */
     public WebElement waitVisibleInput(String xpath, String text, String message) {
         WebElement el = myAssert(() -> wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath))),
-                "Ожидание видимости элемента исчерпано: " + message + ": " + xpath);
+                "Ожидание видимости элемента исчерпано: " + message + ":\n" + xpath);
         waitRealClick(el, xpath);
         waitRealSend(el, xpath, text);
         return el;
@@ -89,7 +89,7 @@ public class BasePage {
      */
     public WebElement waitVisibleInputEnter(String xpath, String text, String message) {
         WebElement el = myAssert(() -> wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath))),
-                "Ожидание видимости элемента исчерпано: " + message + ": " + xpath);
+                "Ожидание видимости элемента исчерпано: " + message + ":\n" + xpath);
         waitRealClick(el, xpath);
         el.clear();
         waitRealSend(el, xpath, text+Keys.ENTER);
@@ -104,7 +104,7 @@ public class BasePage {
      */
     public List<WebElement> waitPresenceList(String xpath, String message) {
         return myAssert(()->wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(xpath))),
-                "Ожидание существования списка элементов исчерпано: " + message + ": " + xpath);
+                "Ожидание существования списка элементов исчерпано: " + message + ":\n" + xpath);
     }
 
     /**
@@ -115,7 +115,36 @@ public class BasePage {
      */
     public WebElement waitPresenceXpath(String xpath, String message) {
         return myAssert(()->wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath))),
-                "Ожидание существования элемента исчерпано: " + message + ": " + xpath);
+                "Ожидание существования элемента исчерпано: " + message + ":\n" + xpath);
+    }
+
+    /**
+     * Ожидание невидимости/отсутствия элемента
+     * @param xpath    xpath элемента
+     * @param message  доп.сообщение для ассерта
+     * @return true- невидим/отсутствует
+     */
+    public boolean waitNotPresenceXpath(String xpath, String message) {
+        return myAssert(()->wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(xpath))),
+                "Ожидание невидимости/отсутствия элемента исчерпано: " + message + ":\n" + xpath);
+    }
+
+    /**
+     * Проверка существования элемента без ожидания и ошибки
+     * @param xpath    xpath элемента
+     * @return true- существует
+     */
+    public boolean isElementPresent(String xpath) {
+        return getAmountOfElements(xpath) > 0;
+    }
+
+    /**
+     * Проверка количества элементов без ожидания и ошибки
+     * @param xpath    xpath элемента
+     * @return количество элементов
+     */
+    public int getAmountOfElements(String xpath) {
+        return driver.findElements(By.xpath(xpath)).size();
     }
 
     /**
@@ -126,7 +155,7 @@ public class BasePage {
      */
     public WebElement waitVisibleXpath(String xpath, String message) {
         return myAssert(()->wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath))),
-                "Ожидание видимости элемента исчерпано: " + message + ": " + xpath);
+                "Ожидание видимости элемента исчерпано: " + message + ":\n" + xpath);
     }
 
     /**
@@ -138,7 +167,7 @@ public class BasePage {
     public WebElement waitVisibleClickableXpath(String xpath, String message) {
         waitVisibleXpath(xpath, message);
         return myAssert(()->wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath))),
-                "Ожидание clickable элемента исчерпано: " + message + ": " + xpath);
+                "Ожидание clickable элемента исчерпано: " + message + ":\n" + xpath);
     }
 
     /**
@@ -152,14 +181,13 @@ public class BasePage {
     public boolean waitXpathAttributeContain(String xpath, String attr, String value, String message) {
         return myAssert(()->wait.until(ExpectedConditions.attributeContains(By.xpath(xpath),
                         attr, value)),
-                "Ожидание существования элемента с аттрибутом: " + attr +"/"+ value +"/"+ message + ": " + xpath);
+                "Ожидание существования элемента с аттрибутом: " + attr +"/"+ value +"/"+ message + ":\n" + xpath);
     }
 
     /**
      * Обертка для явных ожиданий
      * Все ожидания wait() обернуты в ассерт assertTimeoutPreemptively с таймаутом из проперти для:
      * - устраняется баг по цеплянию неявного ожидания
-     * - при неуспехе wait() в аллюр отправляется свое сообщение, а не простыня исключения
      * @param supplier  оборачиваемый executable wait (лямбда supplier)
      *                  usage: ()->wait.until(...)
      * @param message   доп.сообщение для ассерта
@@ -198,7 +226,7 @@ public class BasePage {
                         isCatch[0] = true; return false;
                     }
                     isClick[0] = true; return true; }),
-                "Ожидание клика на элемент исчерпано (клик чем-то закрыт): " + xpath);
+                "Ожидание клика на элемент исчерпано (возможно элемент чем-то закрыт):\n" + xpath);
         return isClick[0];
     }
 
@@ -226,7 +254,7 @@ public class BasePage {
                         isCatch[0] = true; return false;
                     }
                     isSend[0] = true; return true; }),
-                "Ожидание send '"+ text +"' в элемент исчерпано: " + xpath);
+                "Ожидание send '"+ text +"' в элемент исчерпано:\n" + xpath);
         return isSend[0];
     }
 }
