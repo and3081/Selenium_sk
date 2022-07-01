@@ -213,22 +213,22 @@ public class BasePage {
     @SuppressWarnings("UnusedReturnValue")
     public boolean waitRealClick(WebElement el, String xpath) {
         boolean[] isClick = new boolean[]{false};
-        int[] count = new int[]{0};
+//        int[] count = new int[]{0};
 
         myAssert(() ->new WebDriverWait(driver, Duration.ofMillis(timeoutExplicitMs))
                         .pollingEvery(Duration.ofMillis(200))
                         .ignoreAll(List.of(TimeoutException.class))
                         .until((ExpectedCondition<Boolean>) driver -> {
                             try {
-                                count[0]++;
-                                System.out.println("------- click N: "+count[0]);
+//                                count[0]++;
+//                                System.out.println("------- click N: "+count[0]);
                                 el.click();
                             } catch (ElementClickInterceptedException e) {
-                                System.out.println("------- click перекрыт: "+xpath);
+//                                System.out.println("------- click перекрыт: "+xpath);
                                 actions.sendKeys(Keys.ESCAPE).perform();  // попытка снять попап
                                 return false;
                             } catch (Exception e) {
-                                System.out.println("------- click refind/click: "+xpath);
+//                                System.out.println("------- click refind/click: "+xpath);
                                 assert driver != null;
                                 driver.findElement(By.xpath(xpath)).click();  // попытка заново получить элемент
                                 return false;
