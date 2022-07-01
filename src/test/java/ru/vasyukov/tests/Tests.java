@@ -165,52 +165,52 @@ public class Tests extends WebHooks {
     @DisplayName("Тестирование ввода неправильного имени")
     @ParameterizedTest(name = "{arguments}")
     @MethodSource("ru.vasyukov.tests.DataProvider#providerSkill17")
-    public void testSkill17(String name, String errorText) {
+    public void testSkill17(String name, String errorText, String errorTextEn) {
         PageSkillMain.openPageMain(driver)
                 .inputName(name)
                 .clickConsult()
-                .nameError(errorText);
+                .nameError(errorText, errorTextEn);
     }
 
     @DisplayName("Тестирование ввода неправильного email")
     @ParameterizedTest(name = "{arguments}")
     @MethodSource("ru.vasyukov.tests.DataProvider#providerSkill18")
-    public void testSkill18(String email, String errorText) {
+    public void testSkill18(String email, String errorText, String errorTextEn) {
         PageSkillMain.openPageMain(driver)
                 .inputEmail(email)
                 .clickConsult()
-                .emailError(errorText);
+                .emailError(errorText, errorTextEn);
     }
 
     @DisplayName("Тестирование ввода неправильного телефона")
     @ParameterizedTest(name = "{arguments}")
     @MethodSource("ru.vasyukov.tests.DataProvider#providerSkill19")
-    public void testSkill19(String tel, String errorText) {
+    public void testSkill19(String tel, String errorText, String errorTextEn) {
         PageSkillMain.openPageMain(driver)
                 .inputTel(tel)
                 .clickConsult()
-                .telError(errorText);
+                .telError(errorText, errorTextEn);
     }
 
     @DisplayName("Тестирование ввода короткого телефона")
     @ParameterizedTest(name = "{arguments}")
     @MethodSource("ru.vasyukov.tests.DataProvider#providerSkill20")
-    public void testSkill20(String tel, String errorText) {
+    public void testSkill20(String tel, String errorText, String errorTextEn) {
         PageSkillMain.openPageMain(driver)
                 .inputTel(tel)
                 .clickConsult()
-                .telError(errorText);
+                .telError(errorText, errorTextEn);
     }
 
     @DisplayName("Тестирование пустого ввода")
     @ParameterizedTest(name = "{arguments}")
     @MethodSource("ru.vasyukov.tests.DataProvider#providerSkill21")
-    public void testSkill21(String errorText) {
+    public void testSkill21(String errorText, String errorTextEn) {
         PageSkillMain.openPageMain(driver)
                 .clickConsult()
-                .nameError(errorText)
-                .emailError(errorText)
-                .telError(errorText);
+                .nameError(errorText, errorTextEn)
+                .emailError(errorText, errorTextEn)
+                .telError(errorText, errorTextEn);
     }
 
     @DisplayName("Тестирование выборки в /catalogue")

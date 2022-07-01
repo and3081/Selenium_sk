@@ -90,12 +90,14 @@ public class PageSkillMain extends BasePage {
     }
 
     @Step("Текст ошибки Имя '{errorText}'")
-    public PageSkillMain nameError(String errorText) {
+    public PageSkillMain nameError(String errorText, String errorTextEn) {
         String err = "";
         if (waitXpathAttributeContain(XPATH_INPUT_NAME_ERR, "style", "opacity", "Имя/ошибка")) {
             err = waitPresenceXpath(XPATH_INPUT_NAME_ERR, "Имя/ошибка").getText();
         }
-        Assertions.assertEquals(errorText, err, "Должна быть ошибка");
+        if (!err.equals(errorText) && !err.equals(errorTextEn)) {
+            Assertions.assertEquals(errorText, err, "Должна быть ошибка");
+        }
         return this;
     }
 
@@ -106,12 +108,14 @@ public class PageSkillMain extends BasePage {
     }
 
     @Step("Текст ошибки Email '{errorText}'")
-    public PageSkillMain emailError(String errorText) {
+    public PageSkillMain emailError(String errorText, String errorTextEn) {
         String err = "";
         if (waitXpathAttributeContain(XPATH_INPUT_EMAIL_ERR, "style", "opacity", "Email/ошибка")) {
             err = waitPresenceXpath(XPATH_INPUT_EMAIL_ERR, "Email/ошибка").getText();
         }
-        Assertions.assertEquals(errorText, err, "Должна быть ошибка");
+        if (!err.equals(errorText) && !err.equals(errorTextEn)) {
+            Assertions.assertEquals(errorText, err, "Должна быть ошибка");
+        }
         return this;
     }
 
@@ -122,12 +126,14 @@ public class PageSkillMain extends BasePage {
     }
 
     @Step("Текст ошибки Телефон '{errorText}'")
-    public PageSkillMain telError(String errorText) {
+    public PageSkillMain telError(String errorText, String errorTextEn) {
         String err = "";
         if (waitXpathAttributeContain(XPATH_INPUT_TEL_ERR, "style", "opacity", "Телефон/ошибка")) {
             err = waitPresenceXpath(XPATH_INPUT_TEL_ERR, "Телефон/ошибка").getText();
         }
-        Assertions.assertEquals(errorText, err, "Должна быть ошибка");
+        if (!err.equals(errorText) && !err.equals(errorTextEn)) {
+            Assertions.assertEquals(errorText, err, "Должна быть ошибка");
+        }
         return this;
     }
 }

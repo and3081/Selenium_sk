@@ -82,23 +82,23 @@ public class DataProvider {
     }
 
     protected static Stream<Arguments> providerSkill17() {
-        return Stream.of(arguments("123", "Укажите, пожалуйста, имя"));
+        return Stream.of(arguments("123", "Укажите, пожалуйста, имя", "Please put a name"));
     }
 
     protected static Stream<Arguments> providerSkill18() {
-        return Stream.of(arguments("123", "Укажите, пожалуйста, корректный email"));
+        return Stream.of(arguments("123", "Укажите, пожалуйста, корректный email", "Please enter a valid email address"));
     }
 
     protected static Stream<Arguments> providerSkill19() {
-        return Stream.of(arguments("111111111122", "Укажите, пожалуйста, корректный номер телефона"));
+        return Stream.of(arguments("111111111122", "Укажите, пожалуйста, корректный номер телефона", "qwe"));
     }
 
     protected static Stream<Arguments> providerSkill20() {
-        return Stream.of(arguments("111", "Слишком короткое значение"));
+        return Stream.of(arguments("111", "Слишком короткое значение", "Value is too short"));
     }
 
     protected static Stream<Arguments> providerSkill21() {
-        return Stream.of(arguments("Обязательное поле"));
+        return Stream.of(arguments("Обязательное поле", "Required field"));
     }
 
     protected static Stream<Arguments> providerSkill22() {
