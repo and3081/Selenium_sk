@@ -249,20 +249,20 @@ public class BasePage {
     @SuppressWarnings("UnusedReturnValue")
     public boolean waitRealSend(WebElement el, String xpath, String text) {
         boolean[] isSend = new boolean[]{false};
-        boolean[] isCatch = new boolean[]{false};
 
-        myAssert(() -> wait.until((ExpectedCondition<Boolean>) driver -> {
-                    try {
-                        if (isCatch[0]) {
-                            assert driver != null;
-                            driver.findElement(By.xpath(xpath)).sendKeys(text);  // попытка заново получить элемент
-                        } else {
-                            el.sendKeys(text);
-                        }
-                    } catch (Exception e) {
-                        isCatch[0] = true; return false;
-                    }
-                    isSend[0] = true; return true; }),
+        myAssert(() -> new WebDriverWait(driver, Duration.ofMillis(timeoutExplicitMs))
+                        .pollingEvery(Duration.ofMillis(200))
+                        .ignoreAll(List.of(TimeoutException.class))
+                        .until((ExpectedCondition<Boolean>) driver -> {
+                            try {
+                                el.sendKeys(text);
+                            } catch (Exception e) {
+                                assert driver != null;
+                                driver.findElement(By.xpath(xpath)).sendKeys(text);  // попытка заново получить элемент
+                                return false;
+                            }
+                            isSend[0] = true;
+                            return true; }),
                 "Ожидание send '"+ text +"' в элемент исчерпано:\n" + xpath);
         return isSend[0];
     }
