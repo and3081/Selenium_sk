@@ -47,7 +47,12 @@ public class BasePage {
     @Step("Открыть стартовую страницу")
     public static PageSkillMain openPageMain(WebDriver driver) {
         init(driver);
-        driver.get(TestData.application.baseUrlSkillfactory());
+        try {
+            driver.get(TestData.application.baseUrlSkillfactory());
+        } catch (TimeoutException e) {
+            System.out.println("------- timeout: повторный get");
+            driver.get(TestData.application.baseUrlSkillfactory());
+        }
         return new PageSkillMain();
     }
 
@@ -208,24 +213,28 @@ public class BasePage {
     @SuppressWarnings("UnusedReturnValue")
     public boolean waitRealClick(WebElement el, String xpath) {
         boolean[] isClick = new boolean[]{false};
-        boolean[] isCatch = new boolean[]{false};
+        int[] count = new int[]{0};
 
-        myAssert(() -> wait.until((ExpectedCondition<Boolean>) driver -> {
-                    try {
-                        if (isCatch[0]) {
-                            assert driver != null;
-                            driver.findElement(By.xpath(xpath)).click();  // попытка заново получить элемент
-                        } else {
-                            el.click();
-                        }
-                    } catch (ElementClickInterceptedException e) {
-                        actions.sendKeys(Keys.ESCAPE).perform();  // попытка снять попап
-                        isCatch[0] = false;
-                        return false;
-                    } catch (Exception e) {
-                        isCatch[0] = true; return false;
-                    }
-                    isClick[0] = true; return true; }),
+        myAssert(() ->new WebDriverWait(driver, Duration.ofMillis(timeoutExplicitMs))
+                        .pollingEvery(Duration.ofMillis(200))
+                        .ignoreAll(List.of(TimeoutException.class))
+                        .until((ExpectedCondition<Boolean>) driver -> {
+                            try {
+                                count[0]++;
+                                System.out.println("------- click N: "+count[0]);
+                                el.click();
+                            } catch (ElementClickInterceptedException e) {
+                                System.out.println("------- click перекрыт: "+xpath);
+                                actions.sendKeys(Keys.ESCAPE).perform();  // попытка снять попап
+                                return false;
+                            } catch (Exception e) {
+                                System.out.println("------- click refind/click: "+xpath);
+                                assert driver != null;
+                                driver.findElement(By.xpath(xpath)).click();  // попытка заново получить элемент
+                                return false;
+                            }
+                            isClick[0] = true;
+                            return true; }),
                 "Ожидание клика на элемент исчерпано (возможно элемент чем-то закрыт):\n" + xpath);
         return isClick[0];
     }
