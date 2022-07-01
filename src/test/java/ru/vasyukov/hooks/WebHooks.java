@@ -1,6 +1,7 @@
 package ru.vasyukov.hooks;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.openqa.selenium.PageLoadStrategy;
 import ru.vasyukov.custom.listeners.Listeners;
 import ru.vasyukov.custom.properties.TestData;
 import io.qameta.allure.Step;
@@ -105,10 +106,12 @@ public class WebHooks {
                 }
             }
             ChromeOptions options = new ChromeOptions();
-//            options.setPageLoadStrategy(PageLoadStrategy.NONE);
+            options.setPageLoadStrategy(PageLoadStrategy.NORMAL);  // NONE
 //            options.addArguments("start-maximized");
-//            options.addArguments("enable-automation");
+            options.addArguments("enable-automation");
             options.addArguments("--no-sandbox");
+            options.addArguments("--disable-extensions");
+            options.addArguments("--dns-prefetch-disable");
             options.addArguments("--disable-gpu");
             options.addArguments("--disable-dev-shm-usage");
             if (TestData.browser.headlessMode() != null) {

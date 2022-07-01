@@ -90,7 +90,7 @@ public class DataProvider {
     }
 
     protected static Stream<Arguments> providerSkill19() {
-        return Stream.of(arguments("111111111122", "Укажите, пожалуйста, корректный номер телефона", "qwe"));
+        return Stream.of(arguments("111111111122", "Укажите, пожалуйста, корректный номер телефона", "Please put a correct phone number"));
     }
 
     protected static Stream<Arguments> providerSkill20() {
