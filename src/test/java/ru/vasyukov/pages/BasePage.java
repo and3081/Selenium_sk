@@ -207,7 +207,7 @@ public class BasePage {
      * Ожидание и выполнение реального клика, при ElementClickInterceptedException (перекрытие элемента)
      * отправляется ESC в фокус для попытки снятия попапа
      * @param el     элемент для клика
-     * @param xpath  для попытки заново получить элемент
+     * @param xpath  для попытки заново получить элемент / null
      * @return true- клик сделан
      */
     @SuppressWarnings("UnusedReturnValue")
@@ -229,8 +229,10 @@ public class BasePage {
                                 return false;
                             } catch (Exception e) {
 //                                System.out.println("------- click refind/click: "+xpath);
-                                assert driver != null;
-                                driver.findElement(By.xpath(xpath)).click();  // попытка заново получить элемент
+                                if (xpath != null) {
+                                    assert driver != null;
+                                    driver.findElement(By.xpath(xpath)).click();  // попытка заново получить элемент
+                                }
                                 return false;
                             }
                             isClick[0] = true;
@@ -242,7 +244,7 @@ public class BasePage {
     /**
      * Ожидание и выполнение реального send
      * @param el     элемент для send
-     * @param xpath  для попытки заново получить элемент
+     * @param xpath  для попытки заново получить элемент / null
      * @param text   текст для send
      * @return true- send сделан
      */
@@ -257,8 +259,10 @@ public class BasePage {
                             try {
                                 el.sendKeys(text);
                             } catch (Exception e) {
-                                assert driver != null;
-                                driver.findElement(By.xpath(xpath)).sendKeys(text);  // попытка заново получить элемент
+                                if (xpath != null) {
+                                    assert driver != null;
+                                    driver.findElement(By.xpath(xpath)).sendKeys(text);  // попытка заново получить элемент
+                                }
                                 return false;
                             }
                             isSend[0] = true;
