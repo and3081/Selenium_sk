@@ -11,7 +11,7 @@ mvn allure:serve
 
 ## настройки в проперти:
 application.properties - настройки url и endpoints сайта<br>
-browser.properties - настройки браузеров (описание в файле)<br>
+browser.properties - настройки браузеров и веб-драйвера (описание в файле)<br>
 listener.properties - настройки листенера скриншотов для Allure (описание в файле)
 
 # тест-кейсы:
