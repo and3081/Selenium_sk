@@ -1,4 +1,8 @@
-#### Тестирование - Selenium, Java17, Junit5, Maven, Allure 
+#### Тестирование сайта https://skillfactory.ru 
+* Selenium
+* Java 17 / Maven
+* Junit5
+* Allure 
 
 ## запуск всех тестов
 mvn clean test
@@ -10,9 +14,9 @@ mvn allure:serve
 параметризация тестов
 
 ## настройки в проперти:
-application.properties - настройки url и endpoints сайта<br>
-browser.properties - настройки браузеров и веб-драйвера (описание в файле)<br>
-listener.properties - настройки листенера скриншотов для Allure (описание в файле)
+* application.properties - настройки url и endpoints сайта<br>
+* browser.properties - настройки браузеров и веб-драйвера (описание в файле)<br>
+* listener.properties - настройки автоматического листенера скриншотов для Allure (описание в файле)
 
 # тест-кейсы:
 ### Тестирование информации в футере и title главной страницы
@@ -40,10 +44,10 @@ listener.properties - настройки листенера скриншотов
 20. Тестирование ввода короткого телефона '111'<br>Слишком короткое значение
 21. Тестирование пустого ввода<br>Обязательное поле
 ### Тестирование выборки в /catalogue
-22. -Кнопка 'Все курсы' на главной странице<br>
-    -кнопка 'Показать все' в Направление<br>
-    -пункт 'Тестирование'<br>
-    -проверка наличия в результатах трех ссылок qa:<br>
-      /qa-engineer-python-testirovshchik-programmnogo-obespecheniya<br>
-      /java-qa-engineer-testirovshik-po<br>
-      /qa-engineer-po-ruchnomu-testirovaniyu
+22. Кнопка 'Все курсы' на главной странице<br>
+    * кнопка 'Показать все' в Направление<br>
+    * пункт 'Тестирование'<br>
+    * проверка наличия в результатах трех ссылок qa:<br>
+      * /qa-engineer-python-testirovshchik-programmnogo-obespecheniya<br>
+      * /java-qa-engineer-testirovshik-po<br>
+      * /qa-engineer-po-ruchnomu-testirovaniyu
