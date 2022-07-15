@@ -22,7 +22,7 @@
         <aspectj.version>1.9.4</aspectj.version>
         <maven-surefire.version>3.0.0-M5</maven-surefire.version>
         <allure.version>2.17.3</allure.version>
-        <owner.version>1.0.10</owner.version>
+        <owner.version>1.0.12</owner.version>
 
         <parallelCount>1</parallelCount>
     </properties>
